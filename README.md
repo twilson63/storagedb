@@ -2,7 +2,7 @@
 
 A browser database api similar to pouchdb wrapped around localStorage.
 
-[See Docs](docs)
+[See Docs](http://storage-db.surge.sh)
 
 ## Install
 
