@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>StorageDB</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="storagedb">StorageDB</h1>
+<p>StorageDB is a simple database that uses localStorage for its persistence.</p>
+<p>StorageDB models the <code>PouchDB</code> api with a changes feed, post, put and remove.</p>
+<h2 id="api">API</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> api = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <blockquote>
+<p>changes</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  changes: changes,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <blockquote>
+<p>put</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  put: put,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <blockquote>
+<p>post</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  post: post,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <blockquote>
+<p>remove</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  remove: remove,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <blockquote>
+<p>map</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  map: map,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <blockquote>
+<p>filter</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  filter: filter,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <blockquote>
+<p>reduce</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  reduce: reduce
+}
+
+<span class="hljs-keyword">var</span> _dbName = <span class="hljs-literal">null</span>
+<span class="hljs-keyword">const</span> _listeners = {
+  error: [],
+  change: [],
+  complete: []
+}
+<span class="hljs-keyword">var</span> _docs = []</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h3 id="createdb">createDB</h3>
+<pre><code><span class="hljs-keyword">var</span> db = StorageDB(<span class="hljs-string">'mydb'</span>)
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>) </span>{
+  _dbName = name
+  <span class="hljs-keyword">return</span> api
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h3 id="changes">changes</h3>
+<p>Changes Feed will notify any registered function when a
+change has occured, by default it will provide an emitted
+list of all documents when first registered.</p>
+<p>Example:</p>
+<pre><code>db
+  .changes({ include_docs: <span class="hljs-literal">true</span>, live: <span class="hljs-literal">true</span> })
+  .on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">chg</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(chg)
+  })
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changes</span> (<span class="hljs-params">options</span>) </span>{
+  setTimeout(_ =&gt; {
+    _docs = _getData()
+    _docs.map(doc =&gt; {
+      _listeners.change.map(fn =&gt; fn({doc: doc}))
+    })
+  }
+  , <span class="hljs-number">0</span>)
+
+  <span class="hljs-keyword">return</span> {
+    on: (ev, fn) =&gt; _addListener(ev, fn)
+  }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h3 id="post-document">post document</h3>
+<p>post document creates a new json document with a generated
+id and rev.</p>
+<pre><code class="lang-js">db.post({ foo: <span class="hljs-string">'bar'</span>})
+</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">post</span> (<span class="hljs-params">doc</span>) </span>{
+  doc._id = _makeid()
+  doc._rev = _generateRev()
+  _docs.push(doc)
+  _setData()
+  _listeners.change.map(fn =&gt; fn({doc: doc}))
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h3 id="put-document">put document</h3>
+<p>put document will take a document that should have a
+id which must be unique</p>
+<pre><code class="lang-js">db.put({ _id: <span class="hljs-string">'1'</span>, _rev: <span class="hljs-string">'1-1'</span>, foo: <span class="hljs-string">'bar'</span>})
+</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">put</span> (<span class="hljs-params">doc</span>) </span>{
+  _delete(doc)
+  doc._rev = _generateRev(doc._rev)
+  _docs.push(doc)
+  _setData()
+  _listeners.change.map(fn =&gt; fn({doc: doc}))
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h3 id="remove">remove</h3>
+<p>removes a document from the database
+the document must match the id and rev</p>
+<pre><code>db.remove({ _id: <span class="hljs-string">'1'</span>, _rev: <span class="hljs-string">'1-1'</span>, foo: <span class="hljs-string">'bar'</span>})
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove</span> (<span class="hljs-params">doc</span>) </span>{
+  _delete(doc)
+  _listeners.change.map(fn =&gt; fn({doc: <span class="hljs-literal">null</span>}))
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h3 id="get">get</h3>
+<pre><code class="lang-js">db.get(<span class="hljs-number">1</span>)
+</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span>(<span class="hljs-params">id</span>) </span>{
+  <span class="hljs-keyword">const</span> results = _docs.filter(doc =&gt; doc._id === id)
+  <span class="hljs-keyword">if</span> (!results) { <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span> }
+  <span class="hljs-keyword">return</span> results[<span class="hljs-number">0</span>]
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h3 id="map">map</h3>
+<p>map over all documents in the database
+and appy the passed in function to return
+a new set of results</p>
+<pre><code class="lang-js">db.map(doc =&gt; doc._id)
+</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">map</span> (<span class="hljs-params">fn</span>) </span>{
+  <span class="hljs-keyword">return</span> _docs
+    .filter(doc =&gt; !doc._deleted)
+    .map(fn)
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <h3 id="filter">filter</h3>
+<p>the filter function will apply a filter function to all
+docs in the database</p>
+<pre><code class="lang-js">db.filter(doc =&gt; doc.foo === <span class="hljs-string">'bar'</span>)
+</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span> (<span class="hljs-params">fn</span>) </span>{
+  <span class="hljs-keyword">return</span> _docs
+    .filter(doc =&gt; !doc._deleted)
+    .filter(fn)
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h3 id="reduce">reduce</h3>
+<p>the reduce function will perform a reduce
+and return the result</p>
+<pre><code class="lang-js">db.reduce((acc, v) =&gt; <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)
+</code></pre>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reduce</span> (<span class="hljs-params">fn, seed</span>) </span>{
+  <span class="hljs-keyword">return</span> _docs
+    .filter(doc =&gt; !doc._deleted)
+    .reduce(fn, seed)
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>create a unique id</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_makeid</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> text = <span class="hljs-string">""</span>
+  <span class="hljs-keyword">var</span> possible = <span class="hljs-string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"</span>
+
+  <span class="hljs-keyword">for</span>( <span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++ )
+      text += possible.charAt(<span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * possible.length))
+
+  <span class="hljs-keyword">return</span> text
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>generate Rev ID</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_generateRev</span> (<span class="hljs-params">old</span>) </span>{
+  <span class="hljs-keyword">if</span> (!old) { old = <span class="hljs-string">'0-unknown'</span> }
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(old.split(<span class="hljs-string">'-'</span>)[<span class="hljs-number">0</span>], <span class="hljs-number">10</span>) + <span class="hljs-number">1</span> + <span class="hljs-string">'-'</span> + _makeid()
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>get Data from storage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getData</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">window</span>.localStorage.getItem(_dbName) || <span class="hljs-string">"[]"</span>)
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>set Data from storage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_setData</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">window</span>.localStorage.setItem(_dbName, <span class="hljs-built_in">JSON</span>.stringify(_docs))
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>add Listener</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addListener</span>(<span class="hljs-params">ev, fn</span>) </span>{
+  _listeners[ev].push(fn)
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>internal delete document</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_delete</span> (<span class="hljs-params">doc</span>) </span>{
+  <span class="hljs-keyword">var</span> old = get(doc._id)
+  old._deleted = <span class="hljs-literal">true</span>
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

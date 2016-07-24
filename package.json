@@ -1,0 +1,20 @@
+{
+  "name": "storagedb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "test": "tape test/index_test.js",
+    "docs": "docco index.js"
+  },
+  "keywords": [],
+  "author": "Tom",
+  "license": "ISC",
+  "devDependencies": {
+    "docco": "^0.7.0",
+    "localStorage": "^1.0.3",
+    "standard": "^7.1.2",
+    "tape": "^4.6.0"
+  }
+}
