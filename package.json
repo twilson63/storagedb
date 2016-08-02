@@ -1,7 +1,7 @@
 {
   "name": "storagedb",
   "version": "1.0.0",
-  "description": "",
+  "description": "A browser database api similar to pouchdb wrapped around localStorage.",
   "main": "index.js",
   "scripts": {
     "lint": "standard",
@@ -16,5 +16,18 @@
     "localStorage": "^1.0.3",
     "standard": "^7.1.2",
     "tape": "^4.6.0"
-  }
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twilson63/storagedb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/twilson63/storagedb/issues"
+  },
+  "homepage": "https://github.com/twilson63/storagedb#readme"
 }
