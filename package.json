@@ -1,6 +1,6 @@
 {
   "name": "storagedb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A browser database api similar to pouchdb wrapped around localStorage.",
   "main": "index.js",
   "scripts": {
